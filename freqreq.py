@@ -29,7 +29,7 @@ for i in wiki:
     categories.append(i.split("|")[0].split("\n")[0])
     tables.append(i.split("\n\n\n")[0])
 
-# Grab ten new submissions, store their comment forests in lists
+# Grab ten new submissions, store the comment forests into a list
 
 while True:
     for submission in reddit.subreddit("name_of_subredit").new(limit=10):
@@ -43,7 +43,7 @@ while True:
                 task_complete = True
                 break
 
-        # If any comment contains a catageogry name,
+        # If any comment contains a catageogry name, comment the category and table
 
         if not task_complete:
             for comment in comments:
