@@ -3,13 +3,13 @@
 import praw
 import time
 
-# Two variables to hold user credentials and one is an instance of the website
+# Credentials and website access
 
 creds = {"client_id": "X",
          "client_secret": "X",
-         "password": "X",
-         "user_agent": "Assign flair",
-         "username": "5o7bot"}
+         "password": "X!",
+         "user_agent": "similar genre",
+         "username": "name_of_user"}
 
 reddit = praw.Reddit(client_id=creds["client_id"],
                      client_secret=creds["client_secret"],
@@ -17,63 +17,46 @@ reddit = praw.Reddit(client_id=creds["client_id"],
                      user_agent=creds["user_agent"],
                      username=creds["username"])
 
-# Grab the frequently requested movies wiki
+# Variables to store the wiki page, the genres and their data groups
 
-wiki = reddit.subreddit("5o7bot").wiki["faq"].content_md.split("##")
+wiki = reddit.subreddit("name_of_subredit").wiki["name_of_wiki_page"].content_md.split("##")
+categories = []
+tables = []
 
-# a block of code that runs every 15 minutes
+# Grab data from the wiki page and store it in lists
+
+for i in wiki:
+    categories.append(i.split("|")[0].split("\n")[0])
+    tables.append(i.split("\n\n\n")[0])
+
+# Grab ten new submissions, store their comment forests in lists
 
 while True:
-
-    # Examine 10 new submissions one at a time
-
-    for submission in reddit.subreddit("5o7bot").new(limit=10):
-
-        # Put comment forest into a single list
-
+    for submission in reddit.subreddit("name_of_subredit").new(limit=10):
         comments = submission.comments.list()
 
-        # Do not comment if I already commented
+        # Safeguard to avoid spamming
 
         task_complete = False
         for comment in comments:
-            if str(comment.author) == "5o7bot":
+            if str(comment.author) == "name_of_user":
                 task_complete = True
                 break
 
-        # If I have not commented, check the comments for triggers
+        # If any comment contains a catageogry name,
 
         if not task_complete:
-
-            # For each comment in the submission, do the following
-
             for comment in comments:
+                for i in range(1, 58):
+                    if not task_complete:
+                        category_title = categories[i].lower() + "!"
+                        if category_title in comment.body.lower():
+                            entry = tables[i]
+                            comment.reply(entry)
+                            print(entry)
+                            task_complete = True
+                            break
 
-                # Make the comment all lower case
-
-                comment_lower = comment.body.lower()
-
-                # A loop that runs 54 times
-
-                for i in range(1, 54):
-
-                    # Check if any  of the 54 FRM categories are in the comment string
-
-                    if wiki[i].split("|")[0].split("\n")[0].lower() in comment_lower:
-
-                        # compose an entry of the category's table
-
-                        entry = "Frequently requested " + wiki[i].split("\n\n\n")[0]
-
-                        # Publish a comment
-
-                        comment.reply(entry)
-
-                        # Print the comment
-
-                        print(entry)
-                        break
-
-    # Take a 15 minute nap
+    # Take a nap
 
     time.sleep(900)
