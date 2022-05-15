@@ -17,7 +17,7 @@ reddit = praw.Reddit(client_id=creds["client_id"],
                      user_agent=creds["user_agent"],
                      username=creds["username"])
 
-# Variables to store the wiki page, the genres and their data groups
+# Variables to store the wiki page, the genres, and their data groups
 
 wiki = reddit.subreddit("name_of_subredit").wiki["name_of_wiki_page"].content_md.split("##")
 categories = []
