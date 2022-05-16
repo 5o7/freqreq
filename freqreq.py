@@ -5,11 +5,11 @@ import time
 
 # Credentials and website access
 
-creds = {"client_id": "X",
-         "client_secret": "X",
-         "password": "X!",
-         "user_agent": "similar genre",
-         "username": "name_of_user"}
+creds = {"client_id": "GYVxSCrtw9JNiNV9HebijQ",
+         "client_secret": "xYO-3L29sEwAQeETX1Eldo_OqHFP9g",
+         "password": "StarGrove2001!",
+         "user_agent": "Assign flair",
+         "username": "frequently_requested"}
 
 reddit = praw.Reddit(client_id=creds["client_id"],
                      client_secret=creds["client_secret"],
@@ -19,44 +19,45 @@ reddit = praw.Reddit(client_id=creds["client_id"],
 
 # Variables to store the wiki page, the genres, and their data groups
 
-wiki = reddit.subreddit("name_of_subredit").wiki["name_of_wiki_page"].content_md.split("##")
+wiki = reddit.subreddit("moviesuggestions").wiki["frequently_requested"].content_md.split("##")
 categories = []
 tables = []
 
 # Grab data from the wiki page and store it in lists
 
 for i in wiki:
-    categories.append(i.split("|")[0].split("\n")[0])
+    categories.append(i.split("|")[0].split("\n")[0].lower() + "!")
     tables.append(i.split("\n\n\n")[0])
 
 # Grab ten new submissions, store the comment forests into a list
 
 while True:
-    for submission in reddit.subreddit("name_of_subredit").new(limit=10):
+    for submission in reddit.subreddit("5o7bot").new(limit=1):
         comments = submission.comments.list()
 
         # Safeguard to avoid spamming
 
         task_complete = False
         for comment in comments:
-            if str(comment.author) == "name_of_user":
+            if str(comment.author) == "frequently_requested":
                 task_complete = True
                 break
 
-        # If any comment contains a catageogry name, comment the category and table
+        # If any comment contains a category name, comment the category and table
 
         if not task_complete:
             for comment in comments:
-                for i in range(1, 58):
-                    if not task_complete:
-                        category_title = categories[i].lower() + "!"
-                        if category_title in comment.body.lower():
-                            entry = tables[i]
-                            comment.reply(entry)
-                            print(entry)
-                            task_complete = True
-                            break
+                if not task_complete:
+                    for i in range(1, 58):
+                        if not task_complete:
+                            if categories[i] in comment.body.lower():
+                                entry = tables[i]
+                                comment.reply(entry)
+                                print(entry)
+                                task_complete = True
+                                break
 
     # Take a nap
 
     time.sleep(900)
+
