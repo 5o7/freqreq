@@ -32,7 +32,7 @@ for i in wiki:
 # Grab ten new submissions, store the comment forests into a list
 
 while True:
-    for submission in reddit.subreddit("5o7bot").new(limit=1):
+    for submission in reddit.subreddit("5o7bot").new(limit=10):
         comments = submission.comments.list()
 
         # Safeguard to avoid spamming
