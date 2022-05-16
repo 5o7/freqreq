@@ -5,11 +5,11 @@ import time
 
 # Credentials and website access
 
-creds = {"client_id": "GYVxSCrtw9JNiNV9HebijQ",
-         "client_secret": "xYO-3L29sEwAQeETX1Eldo_OqHFP9g",
-         "password": "StarGrove2001!",
-         "user_agent": "Assign flair",
-         "username": "frequently_requested"}
+creds = {"client_id": "X",
+         "client_secret": "X",
+         "password": "X",
+         "user_agent": "X",
+         "username": "X"}
 
 reddit = praw.Reddit(client_id=creds["client_id"],
                      client_secret=creds["client_secret"],
@@ -19,7 +19,7 @@ reddit = praw.Reddit(client_id=creds["client_id"],
 
 # Variables to store the wiki page, the genres, and their data groups
 
-wiki = reddit.subreddit("moviesuggestions").wiki["frequently_requested"].content_md.split("##")
+wiki = reddit.subreddit("X").wiki["X"].content_md.split("##")
 categories = []
 tables = []
 
@@ -39,7 +39,7 @@ while True:
 
         task_complete = False
         for comment in comments:
-            if str(comment.author) == "frequently_requested":
+            if str(comment.author) == "X":
                 task_complete = True
                 break
 
