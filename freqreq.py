@@ -43,7 +43,7 @@ while True:
                 task_complete = True
                 break
 
-        # If any comment contains a category name, comment the category's table
+        # If comment contains an item in categories, reply with the corresponding table
 
         if not task_complete:
             for comment in comments:
