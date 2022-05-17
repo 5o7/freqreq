@@ -9,7 +9,7 @@ creds = {"client_id": "X",
          "client_secret": "X",
          "password": "X",
          "user_agent": "X",
-         "username": "X"}
+         "username": "name_of_user"}
 
 reddit = praw.Reddit(client_id=creds["client_id"],
                      client_secret=creds["client_secret"],
@@ -19,7 +19,7 @@ reddit = praw.Reddit(client_id=creds["client_id"],
 
 # Variables to store the wiki page, the genres, and their data groups
 
-wiki = reddit.subreddit("X").wiki["X"].content_md.split("##")
+wiki = reddit.subreddit("name_of_subreddit").wiki["wiki_page"].content_md.split("##")
 categories = []
 tables = []
 
@@ -32,14 +32,14 @@ for i in wiki:
 # Grab ten new submissions, store the comment forests into a list
 
 while True:
-    for submission in reddit.subreddit("X").new(limit=10):
+    for submission in reddit.subreddit("name_of_subreddit").new(limit=10):
         comments = submission.comments.list()
 
         # Safeguard to avoid spamming
 
         task_complete = False
         for comment in comments:
-            if str(comment.author) == "X":
+            if str(comment.author) == "name_of_user":
                 task_complete = True
                 break
 
